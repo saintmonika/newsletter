@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stuff by Isabella</title>
+<meta name="description" content="I keep starting projects in fields I wasn't trained in. Once a month I write down how it's going.">
+<meta property="og:title" content="Stuff by Isabella">
+<meta property="og:description" content="I keep starting projects in fields I wasn't trained in. Once a month I write down how it's going.">
+<meta name="theme-color" content="#252526">
+
+<script>
+/* ================= SETTINGS: the only block you need to edit ================= */
+window.NEWSLETTER = {
+  // Buttondown form address. Leave '' and the page runs in preview mode (nothing is sent).
+  endpoint: 'https://buttondown.com/api/emails/embed-subscribe/IsabellaDoan',
+
+  // After you send a letter, fill this in so the page shows it, e.g.
+  // lastLetter: {month: 'November', topic: 'Teaching a game engine to lie'},
+  // While it's null, the page says "First letter goes out at the end of <this month>."
+  lastLetter: null,
+
+  // Where "back" goes. Leave '' to hide the back link.
+  backUrl: '',
+
+  // Leave these as they are for Buttondown.
+  emailField: 'email',
+  extraFields: { embed: '1' },
+  doubleOptIn: true
+};
+/* ============================================================================ */
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE   quiet, expensive, one gesture
+IDEA    a heavy matte surface you press your address into, no ink
+PICTURE the pressed-in well and the letters sinking into it, lit by a raking light that follows you
+COLOUR  dark grey material, one random accent (caret + cursor label only)
+TYPE    Hanken Grotesk only, used with range; LAYOUT one centred column
+*/
+:root{
+  color-scheme:dark;
+  --bg:#252526;--well:#1f1f20;
+  --ink:#e8e4dc;--soft:#8f8b85;--faint:#6a6763;--cut:#bdb8ae;
+  --acc:#c9a96e;
+  --lx:-.3;--ly:-1;--px:35%;--py:25%;
+  --fs:34px;--h:88px;--pad:26px;
+}
+*{box-sizing:border-box;min-width:0}
+html,body{min-height:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Hanken Grotesk',system-ui,sans-serif;
+  overflow-x:clip;-webkit-font-smoothing:antialiased;
+}
+/* the raking light across the material */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(1000px 760px at var(--px) var(--py),rgba(255,248,236,.065),transparent 62%),
+    radial-gradient(140% 120% at 50% 40%,transparent 55%,rgba(0,0,0,.35));
+}
+/* grain: the surface is a material, not a colour */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:6;opacity:.11;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main{position:relative;z-index:1;min-height:100svh;display:grid;place-items:center;padding:96px max(6vw,20px)}
+.piece{width:min(720px,100%);transform:translateY(-3vh)}
+.name{margin:0;font-size:clamp(30px,5vw,46px);line-height:1.05;font-weight:500;letter-spacing:-.01em;text-wrap:balance}
+.sub{max-width:34em;margin:16px 0 38px;color:#b3afa8;font-size:17px;line-height:1.55;text-wrap:pretty}
+
+form{margin:0}
+.row{display:flex;align-items:center;gap:30px}
+.well{
+  position:relative;flex:1;height:var(--h);overflow:hidden;background:var(--well);cursor:text;
+  box-shadow:
+    inset calc(var(--lx)*-5px) calc(var(--ly)*-5px) 10px rgba(0,0,0,.6),
+    inset calc(var(--lx)*1px) calc(var(--ly)*1px) 0 rgba(255,255,255,.045),
+    calc(var(--lx)*-1px) calc(var(--ly)*-1px) 0 rgba(255,255,255,.055);
+}
+.well.thud{animation:thud .55s cubic-bezier(.3,.6,.2,1)}
+@keyframes thud{35%{box-shadow:inset calc(var(--lx)*-7px) calc(var(--ly)*-7px) 14px rgba(0,0,0,.7),inset 0 0 0 rgba(0,0,0,0),0 0 0 rgba(0,0,0,0)}}
+
+.well input,.type,.measure{
+  font-family:inherit;font-size:var(--fs);font-weight:400;font-kerning:none;letter-spacing:.01em;
+  white-space:pre;line-height:var(--h);
+}
+/* the real input sits underneath and stays invisible; the pressed letters are drawn on top */
+.well input{
+  position:absolute;inset:0;z-index:1;width:100%;height:100%;margin:0;padding:0 var(--pad);
+  border:0;outline:0;background:transparent;border-radius:0;
+  color:transparent;-webkit-text-fill-color:transparent;caret-color:transparent;
+  -webkit-appearance:none;appearance:none;cursor:text;
+}
+.well input::selection{background:color-mix(in srgb,var(--acc) 32%,transparent);color:transparent}
+.well input::placeholder{color:transparent;-webkit-text-fill-color:transparent}
+/* browser autofill: keep its coloured box and text from covering the pressed letters */
+.well input:-webkit-autofill,.well input:-webkit-autofill:hover,.well input:-webkit-autofill:focus{
+  -webkit-text-fill-color:transparent;transition:background-color 600000s 0s,color 600000s 0s}
+.type{position:absolute;inset:0;z-index:2;padding:0 var(--pad);pointer-events:none;will-change:transform}
+.measure{position:absolute;visibility:hidden;left:-9999px;top:0;line-height:1}
+
+/* a letter cut into the surface: shadowed wall toward the light, lit lip away from it */
+.ch,.ph{display:inline-block;
+  text-shadow:calc(var(--lx)*1px) calc(var(--ly)*1px) 0 rgba(0,0,0,.82),calc(var(--lx)*-1px) calc(var(--ly)*-1px) 0 rgba(255,255,255,.1)}
+.ch{color:var(--cut)}
+.ph{color:var(--faint);text-shadow:calc(var(--lx)*1px) calc(var(--ly)*1px) 0 rgba(0,0,0,.6),calc(var(--lx)*-1px) calc(var(--ly)*-1px) 0 rgba(255,255,255,.05)}
+.ch.new{animation:press .34s cubic-bezier(.2,.75,.2,1)}
+@keyframes press{0%{transform:translateY(-3px) scale(1.1);color:#f5f2eb;text-shadow:0 5px 9px rgba(0,0,0,.55),0 0 0 rgba(0,0,0,0)}}
+.set .ch{
+  color:#aaa59c;animation:set .55s cubic-bezier(.3,.6,.2,1);
+  text-shadow:calc(var(--lx)*1.7px) calc(var(--ly)*1.7px) 0 rgba(0,0,0,.88),calc(var(--lx)*-1px) calc(var(--ly)*-1px) 0 rgba(255,255,255,.13)}
+@keyframes set{35%{transform:translateY(1.5px) scale(.975)}}
+
+.caret{display:inline-block;width:0;height:1.02em;vertical-align:-.2em;position:relative}
+.caret::after{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--acc);animation:blink 1.06s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+.go{
+  flex:none;min-height:44px;padding:10px 2px;border:0;background:none;border-radius:0;cursor:pointer;
+  font:inherit;font-size:19px;color:var(--faint);transition:color .35s,opacity .4s;
+}
+.go:hover{color:var(--soft)}
+.go.ok{color:var(--ink)}
+.go:focus-visible{outline:1px solid var(--acc);outline-offset:6px}
+.go.gone{opacity:0;pointer-events:none}
+.go:disabled{cursor:default}
+
+.msg{min-height:1.6em;margin:18px 0 0;color:var(--soft);font-size:16px}
+.msg.idle{color:var(--faint)}
+.note{min-height:1.5em;margin:6px 0 0;color:var(--faint);font-size:13px}
+
+.back{position:fixed;z-index:4;top:18px;left:max(5vw,20px);padding:10px 0;color:var(--soft);text-decoration:none;font-size:15px;transition:color .3s}
+.back:hover{color:var(--ink)}
+.back:focus-visible{outline:1px solid var(--acc);outline-offset:4px}
+.stamp{position:fixed;z-index:4;bottom:22px;right:max(5vw,20px);margin:0;color:var(--faint);font-size:13px}
+
+#tip{
+  position:fixed;left:0;top:0;z-index:9;pointer-events:none;opacity:0;transition:opacity .15s;
+  background:var(--acc);color:#141414;font:500 12px/1 'Hanken Grotesk',system-ui,sans-serif;padding:6px 8px 5px;white-space:nowrap;
+}
+@media (hover:none),(pointer:coarse){#tip{display:none}}
+
+@media (max-width:600px){
+  :root{--h:72px;--pad:18px}
+  .row{flex-direction:column;align-items:stretch;gap:4px}
+  .well{flex:none}
+  .go{align-self:flex-end}
+  .go.gone{min-height:0;height:0;padding:0;overflow:hidden}
+  .sub{margin-bottom:28px}
+  .stamp{bottom:16px}
+}
+@media (max-height:560px){.stamp{display:none}}
+@media (prefers-reduced-motion:reduce){
+  .ch.new,.set .ch,.well.thud{animation:none}
+  .caret::after{animation:none}
+}
+</style>
+</head>
+<body>
+<a class="back" id="back" href="#" data-tip="leave">back</a>
+
+<main>
+  <div class="piece">
+    <h1 class="name">Stuff by Isabella</h1>
+    <p class="sub">I keep starting projects in fields I wasn't trained in. Right now that's an AI game engine, a few 3D worlds, and tools for molecular biology. Once a month I write down how it's going.</p>
+
+    <form id="f" novalidate>
+      <div class="row">
+        <div class="well" id="well" data-tip="type">
+          <input id="email" type="text" name="email" autocomplete="email" inputmode="email"
+                 autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send"
+                 maxlength="254" aria-label="Your email" aria-describedby="msg" placeholder="your email">
+          <div class="type" id="type" aria-hidden="true"></div>
+        </div>
+        <button class="go" id="go" type="submit" data-tip="subscribe">subscribe</button>
+      </div>
+      <p class="msg" id="msg" aria-live="polite"></p>
+      <p class="note" id="note"></p>
+    </form>
+  </div>
+</main>
+
+<p class="stamp" id="stamp"></p>
+<div id="tip" aria-hidden="true"></div>
+<span class="measure" id="measure" aria-hidden="true"></span>
+
+<script>
+{
+const C = Object.assign({
+  endpoint:'', lastLetter:null, backUrl:'',
+  emailField:'email', extraFields:{}, doubleOptIn:true
+}, window.NEWSLETTER || {});
+
+const ACCENTS = ['#c9a96e','#9db8a8','#bb95a2','#a6aec6','#b9b48c'];
+const root = document.documentElement;
+root.style.setProperty('--acc', ACCENTS[Math.floor(Math.random()*ACCENTS.length)]);
+
+const $ = id => document.getElementById(id);
+const inp = $('email'), type = $('type'), well = $('well'), go = $('go'), form = $('f'),
+      msg = $('msg'), note = $('note'), measure = $('measure'), tip = $('tip'), back = $('back');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const valid = v => v.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+
+let prev = '', done = false, busy = false;
+const caret = document.createElement('i');
+caret.className = 'caret';
+
+/* ---- dates: letters go out by the end of each month ---- */
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const fmt = d => d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
+function nextIssue(){
+  const now = new Date();
+  let m = now.getMonth();
+  const last = C.lastLetter && C.lastLetter.month;
+  // this month's letter already went out -> the next one is next month
+  if (last && String(last).trim().toLowerCase() === MONTHS[m].toLowerCase()) m = (m + 1) % 12;
+  return {month: MONTHS[m], first: !last};
+}
+function idleLine(){
+  const n = nextIssue();
+  if (n.first) return `First letter goes out at the end of ${n.month}.`;
+  if (C.lastLetter.topic) return `Last letter, ${C.lastLetter.month}: ${C.lastLetter.topic}.`;
+  return `Next letter at the end of ${n.month}.`;
+}
+function showIdle(){ msg.textContent = idleLine(); msg.className = 'msg idle'; delete msg.dataset.err; }
+function showMsg(text, isErr){ msg.textContent = text; msg.className = 'msg'; if (isErr) msg.dataset.err = '1'; else delete msg.dataset.err; }
+
+/* ---- fit long addresses inside the well ---- */
+function fit(){
+  const small = innerWidth <= 600;
+  const base = small ? 24 : 34, pad = small ? 18 : 26;
+  const avail = well.clientWidth - pad*2 - 4;
+  measure.style.fontSize = base + 'px';
+  measure.textContent = inp.value || 'your email';
+  const w = measure.offsetWidth;
+  const size = w > avail && avail > 0 ? Math.max(16, Math.floor(base*avail/w)) : base;
+  well.style.setProperty('--fs', size + 'px');
+}
+
+/* ---- draw the letters; only newly typed ones get pressed in ---- */
+function build(freshFrom = -1, freshTo = -1){
+  const v = inp.value;
+  if (!v){
+    type.innerHTML = '<span class="ph">your email</span>';
+    type.insertBefore(caret, type.firstChild);
+  } else {
+    type.innerHTML = [...v].map((c,i) =>
+      `<span class="ch${!reduce && i>=freshFrom && i<freshTo ? ' new':''}">${esc(c)}</span>`).join('');
+    placeCaret();
+  }
+  fit();
+  sync();
+  go.classList.toggle('ok', valid(v.trim()));
+}
+function placeCaret(){
+  if (done){ caret.remove(); return; }
+  const v = inp.value;
+  if (!v) return;
+  const s = inp.selectionStart ?? v.length, e = inp.selectionEnd ?? v.length;
+  caret.style.display = s === e ? '' : 'none';
+  const spans = type.querySelectorAll('.ch');
+  type.insertBefore(caret, spans[s] || null);
+}
+function sync(){ type.style.transform = inp.scrollLeft ? `translateX(${-inp.scrollLeft}px)` : ''; }
+const later = () => requestAnimationFrame(() => { placeCaret(); sync(); });
+
+function onInput(){
+  if (done) return;
+  const v = inp.value;
+  let p = 0; while (p < v.length && p < prev.length && v[p] === prev[p]) p++;
+  let q = 0; while (q < v.length-p && q < prev.length-p && v[v.length-1-q] === prev[prev.length-1-q]) q++;
+  build(p, v.length - q);
+  prev = v;
+  if (msg.dataset.err) showIdle();
+}
+inp.addEventListener('input', onInput);
+inp.addEventListener('change', onInput);           // some autofill paths only fire change
+['keyup','click','select','focus'].forEach(ev => inp.addEventListener(ev, () => { placeCaret(); sync(); }));
+inp.addEventListener('keydown', later);            // held arrow keys
+inp.addEventListener('scroll', sync);
+document.addEventListener('selectionchange', () => { if (document.activeElement === inp) placeCaret(); });
+addEventListener('resize', () => { fit(); later(); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fit(); later(); });
+
+/* ---- send ---- */
+async function send(email){
+  if (!C.endpoint) return 'preview';
+  const body = new URLSearchParams(Object.assign({}, C.extraFields, {[C.emailField]: email}));
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), 12000);
+  try {
+    // no-cors: the request reaches the newsletter service, but the browser hides its reply.
+    await fetch(C.endpoint, {method:'POST', mode:'no-cors', body, signal:ctl.signal});
+    return 'sent';
+  } catch (_) {
+    return 'failed';
+  } finally { clearTimeout(timer); }
+}
+
+function lock(on){
+  done = on;
+  inp.readOnly = on;
+  type.classList.toggle('set', on);
+  go.classList.toggle('gone', on);
+  go.disabled = on;
+  well.style.cursor = inp.style.cursor = on ? 'default' : '';
+  if (on){ well.removeAttribute('data-tip'); tip.style.opacity = 0; caret.remove(); }
+  else well.setAttribute('data-tip','type');
+}
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  if (done || busy) return;
+  const v = inp.value.trim();
+  if (!valid(v)){
+    showMsg(v ? "that doesn't look like an email yet" : 'type your email first', true);
+    inp.focus();
+    return;
+  }
+  busy = true;
+  if (inp.value !== v){ inp.value = v; prev = v; build(); }
+  lock(true);
+  inp.blur();
+  well.classList.remove('thud'); void well.offsetWidth; well.classList.add('thud');
+  note.textContent = '';
+  const state = await send(v);
+  busy = false;
+  if (state === 'failed'){
+    lock(false);
+    build();
+    showMsg("that didn't go through. try again in a moment", true);
+    return;
+  }
+  const n = nextIssue();
+  const when = ` ${n.first ? 'First' : 'Next'} letter at the end of ${n.month}.`;
+  showMsg((state === 'sent' && C.doubleOptIn ? 'Check your inbox to confirm.' : "You're in.") + when, false);
+  if (state === 'preview') note.textContent = "Preview only: this page isn't connected to a newsletter service yet, so nothing was sent.";
+});
+
+/* ---- back ---- */
+if (C.backUrl) back.href = C.backUrl;
+else back.remove();
+
+/* ---- the date, quietly ---- */
+$('stamp').textContent = fmt(new Date());
+
+/* ---- cursor label: says what a click does ---- */
+const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+if (fine){
+  addEventListener('pointermove', e => {
+    const t = e.target.closest && e.target.closest('[data-tip]');
+    if (t && (!done || t === back)){
+      tip.textContent = t.dataset.tip;
+      tip.style.transform = `translate(${e.clientX + 14}px, ${e.clientY + 18}px)`;
+      tip.style.opacity = 1;
+    } else tip.style.opacity = 0;
+  });
+  document.addEventListener('pointerleave', () => tip.style.opacity = 0);
+}
+
+/* ---- the light follows you, so the cuts change with it ---- */
+if (!reduce && fine){
+  let tx = -.3, ty = -1, lx = tx, ly = ty, px = 35, py = 25, tpx = px, tpy = py, raf = 0;
+  const step = () => {
+    lx += (tx-lx)*.08; ly += (ty-ly)*.08; px += (tpx-px)*.08; py += (tpy-py)*.08;
+    root.style.setProperty('--lx', lx.toFixed(3));
+    root.style.setProperty('--ly', ly.toFixed(3));
+    root.style.setProperty('--px', px.toFixed(1)+'%');
+    root.style.setProperty('--py', py.toFixed(1)+'%');
+    raf = (Math.abs(tx-lx) + Math.abs(ty-ly) + Math.abs(tpx-px)/100 + Math.abs(tpy-py)/100 > .002) ? requestAnimationFrame(step) : 0;
+  };
+  addEventListener('pointermove', e => {
+    const x = e.clientX/innerWidth, y = e.clientY/innerHeight;
+    tx = (x - .5)*1.6; ty = -.55 + (y - .5)*.9;
+    tpx = x*100; tpy = y*100;
+    if (!raf) raf = requestAnimationFrame(step);
+  });
+}
+
+/* ---- start with the cursor already in the well ---- */
+showIdle();
+build();
+try { inp.focus({preventScroll:true}); } catch(_) {}
+}
+</script>
+</body>
+</html>
